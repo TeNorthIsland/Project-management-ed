@@ -1,0 +1,31 @@
+### 测试基础的功能，密码的登录 还有token的鉴权，目前不支持无缝的token刷新
+@uri  = http://localhost:3000
+
+
+### 用户的登录注册的时候获取验证码
+GET {{uri}}/getVerify
+
+
+### 用户登录验证码验证
+POST {{uri}}/verify
+Content-Type: application/json
+ 
+{
+  "code":4544
+}
+
+### 用户发起登陆注册的请求
+POST {{uri}}/register
+Content-Type: application/json
+
+{
+  "username":"bm-laoli",
+  "password":123456
+}
+
+
+### 实现token的验证行为
+
+
+###  对几个数据进行增删改查
+
