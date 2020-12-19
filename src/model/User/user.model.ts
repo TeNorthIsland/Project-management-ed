@@ -1,27 +1,63 @@
-import { prop } from '@typegoose/typegoose'
-import  * as bcrypt from 'bcrypt'
-import { ApiPropertyOptional } from '@nestjs/swagger'
+/*
+ * @Author: your name
+ * @Date: 2020-07-24 19:47:23
+ * @LastEditTime: 2020-12-17 13:21:16
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \Node_NestJS\Noted\第五章，这商业项目\蓝图\MnogDB_blueprint\src\model\User\user.model.ts
+ */
+import { prop, Ref } from '@typegoose/typegoose'
+import * as bcrypt from 'bcrypt'
+import { ApiPropertyOptional, ApiRequestTimeoutResponse } from '@nestjs/swagger'
 import { IsNotEmpty } from 'class-validator'
+import { GlobalRole } from '../GlobalRole/globalRole.model'
 
 
 // 用类 定义模型
 export class User {
-  @ApiPropertyOptional({description:'用户名',example:'admin'})
-  @IsNotEmpty({message:'改表单字段不允许为空'})
-  @prop({default:'hahha'})  // 这个是写schma的东西，但是我们一般不写了
-  username:string
+  @ApiPropertyOptional({ description: '用户名', example: 'admin' })
+  @IsNotEmpty({ message: '用户名不能为空' })
+  @prop({ default: 'hahha' })
+  username: string
 
-  @ApiPropertyOptional({description:'用户邮箱',example:'861795660@qq.com'})
-  @IsNotEmpty({message:'改表单字段不允许为空'})
-  @prop({})  // 这个是写schma的东西，但是我们一般不写了
-  email:string
 
-  @ApiPropertyOptional({description:'登录密码',example:'123456'})
+  @ApiPropertyOptional({ description: '姓名', example: '老王' })
+  @prop({})
+  name: string
+
+  @ApiPropertyOptional({ description: '手机', example: '18376627155' })
+  @prop({})
+  phoneNumber: string
+
+  @ApiPropertyOptional({ description: '用户角色', example: '' })
+  @prop({ ref: GlobalRole })
+  rule: Ref<GlobalRole>
+
+  @ApiPropertyOptional({ description: '用户邮箱', example: '861795660@qq.com' })
+  @IsNotEmpty({ message: '用户邮箱不允许为空' })
+  @prop({})
+  email: string
+
+
+  @ApiPropertyOptional({ description: '用户性别', example: 'isMan' })
+  @prop({ default: 'isMan' })
+  sex: string
+
+  @ApiPropertyOptional({ description: '用户生日', example: '' })
+  @prop({ default: Date.now })
+  brith: Date
+
+  @ApiPropertyOptional({ description: '描述', example: '这是一段简单的描述' })
+  @prop({})
+  description: string
+
+  @ApiPropertyOptional({ description: '登录密码', example: '123456' })
+  @IsNotEmpty({ message: '密码不能为空' })
   @prop({
-    set:value =>  bcrypt.hashSync(value,10),
-    get:value => value,
+    set: value => bcrypt.hashSync(value, 10),
+    get: value => value,
     select: false, // 默认不允许查询出密码字段
   })
-  password:string
+  password: string
+
 }
-  

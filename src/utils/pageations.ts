@@ -1,18 +1,18 @@
-import * as Pagination  from 'mongoose-sex-page'
+import * as Pagination from 'mongoose-sex-page'
+const _ = require('lodash')
 
-let _ = require('lodash')
 
-let QueryPage = (req) =>  {
+const QueryPage = (req) => {
   let page = +req.query.page;
-  let pagasize = +req.query.size || null;  // 默认显示多少页
+  let pagasize = +req.query.pagasize || null;  // 默认显示多少页
   if (!page || !_.isNumber(page)) page = 1;
   return {
-    page, pagasize    
+    page, pagasize
   }
 }
 
 // 结构所有的查询语句，
-let QueryStructure  = (req):any =>{
+const QueryStructure = (req): any => {
 
   let obj = req.query
   let structure = {}
@@ -25,4 +25,7 @@ let QueryStructure  = (req):any =>{
   }
 }
 
-export { QueryPage,QueryStructure,Pagination}
+// antdProTable 结构化查询语句
+
+
+export { QueryPage, QueryStructure, Pagination }
