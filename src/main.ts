@@ -18,7 +18,7 @@ import { join } from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-
+    
   app.enableCors();  //解决跨域
   // 静态资源访问
   app.useStaticAssets(join(__dirname, './', 'uploads'))
@@ -38,6 +38,6 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe())  // 开启全局的验证管道和错误过滤   
   app.useGlobalFilters(new HttpExceptionFilter());
 
-  await app.listen(3000);
+  await app.listen(3045);
 }
 bootstrap();
