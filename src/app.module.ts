@@ -13,6 +13,7 @@ import { AlbumModule } from './common/album/album.module';
 import { GroleModule } from './modules/grole/grole.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { ProJectMModule } from './modules/pro-ject-m/pro-ject-m.module';
 @Module({
   imports: [
     // 部署客户端 程序
@@ -28,16 +29,17 @@ import { join } from 'path';
       inject: [ConfigService], // 外部的持续注入，注入到具体的模块中去
     }),
     // 配置数据库服务项
-    TypegooseModule.forRoot("mongodb://usename:password@MD_PATH", {
+    TypegooseModule.forRoot("mongodb://root:Li_861795660@112.124.109.250:27017/Dev_ProM", {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      // authSource: 'admin',
+      authSource: 'admin',
     }),
     EmailModule,
     AuthModule,
     LogingModule,
     AlbumModule,
-    GroleModule
+    GroleModule,
+    ProJectMModule
 
 
   ],
