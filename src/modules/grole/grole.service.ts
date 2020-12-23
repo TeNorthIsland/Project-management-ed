@@ -14,11 +14,19 @@ export class GroleService {
 
   // 查询角色 默认分页。支持多字段查询
   async getGRoleList(req: any) {
-    let { page, pagasize } = QueryPage(req)
+    let { current, pageSize } = QueryPage(req)
     // 查询
-    return await Pagination(this.GlobalRoleModel).page(page).size(pagasize).display(5)
-      .find({})
-      .exec()
+    let res = await Pagination(this.GlobalRoleModel).page(current).size(pageSize).display(5).find({}).exec()
+    return {
+      sucess: true,
+      data: {
+        total: res.total,
+        current: res.page,
+        pageSize: res.size,
+        totalPage: res.pages,
+        data: res.records
+      }
+    }
   }
 
   // 创建角色

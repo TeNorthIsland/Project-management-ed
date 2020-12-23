@@ -3,10 +3,25 @@ import { InjectModel } from 'nestjs-typegoose';
 import { User } from 'src/model/User/user.model';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { Code } from 'src/model/Verification/verification';
-import { QueryStructure } from 'src/utils/pageations';
+import { Pagination, QueryPage, QueryStructure } from 'src/utils/pageations';
 
 @Injectable()
 export class LogingService {
+
+  private ParsingPage(value, originMethod) {
+    return {
+      sucess: true,
+      data: {
+        total: value.total,
+        current: value.page,
+        pageSize: value.size,
+        totalPage: value.pages,
+        data: originMethod()
+      }
+    }
+  }
+
+
   constructor(
     @InjectModel(User) private readonly UserModel: ModelType<User>,
     @InjectModel(Code) private readonly CodeModel: ModelType<Code>,
@@ -31,6 +46,14 @@ export class LogingService {
       success: true,
       message: '验证通过'
     }
+  }
+
+  // 获取所有用户
+  async getUseList(req: any) {
+    let { current, pageSize, } = QueryPage(req)
+    // 查询
+    let res = await Pagination(this.UserModel).page(current).size(pageSize).display(5).find({}).exec()
+    return this.ParsingPage(res, () => res.records)
   }
 
   // 发起注册请求

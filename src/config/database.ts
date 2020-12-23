@@ -1,5 +1,9 @@
+
 export default {
-  uri:'mongodb://localhost:27017/SafetySystm-api',
-  useNewUrlParser: true,
-  useUnifiedTopology: true
+  uri: '/Dev_ProM',
+  other: {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    authSource: 'admin',
+  }
 };
