@@ -5,16 +5,52 @@ import { GlobalRole } from 'src/model/GlobalRole/globalRole.model';
 import { Project } from 'src/model/ProjectDetails/Project.model';
 import { ProjectCategory } from 'src/model/ProjectDetails/ProjectCategory.model';
 import { ProjectComment } from 'src/model/ProjectDetails/ProjectComment.model';
+import { ProjectMieage } from 'src/model/ProjectDetails/ProjectMileage.model';
 import { PmLable } from 'src/model/ProjectM/lable.model';
 import { ProJectMService } from './pro-ject-m.service';
 
 @ApiTags('项目管理模块')
-@UseGuards(AuthGuard('jwt'))
+// @UseGuards(AuthGuard('jwt'))
 @Controller('/proJectM')
 export class ProJectMController {
   constructor(
     private readonly ProJectMService: ProJectMService
   ) { }
+
+
+  // ------------------项目里程碑----------------
+  // 创项目里程碑 
+  @ApiOperation({ summary: '创项目里程碑' })
+  @Post('createProjectMieage')
+  createProjectMieage(@Body() body: ProjectMieage): any {
+    return this.ProJectMService.createProjectMieage(body)
+  }
+
+  // 编项目里程碑
+  @ApiOperation({ summary: '修改项目里程碑' })
+  @ApiQuery({ name: '_id', description: '修改项目里程碑的id' })
+  @Put('editeProjectMieage')
+  editeProjectMieage(@Request() req: any, @Body() body: ProjectMieage) {
+    return this.ProJectMService.editeProjectMieage(req, body)
+  }
+
+  // 查项目里程碑
+  @ApiOperation({ summary: '查项目里程碑列表' })
+  @ApiQuery({ name: 'current', required: false })
+  @ApiQuery({ name: 'pageSize', required: false })
+  @Get('getProjectMieageList')
+  getProjectMieage(@Request() req: any) {
+    return this.ProJectMService.getProjectMieage(req)
+  }
+
+  // 删项目里程碑,允许批量操作
+  @ApiOperation({ summary: '删除指定ID项目里程碑' })
+  @ApiQuery({ name: 'idList', required: false })
+  @Delete('deleteProjectMieage')
+  deleteProjectMieage(@Request() req: any) {
+    return this.ProJectMService.deleteProjectMieage(req)
+  }
+
 
 
   // ------------------ 项目分类----------------
@@ -26,8 +62,8 @@ export class ProJectMController {
   }
 
   // 编辑项目分类
-  @ApiOperation({ summary: '修改项目分类' })
-  @ApiQuery({ name: '_id', description: '修改项目分类的id' })
+  @ApiOperation({ summary: '修改改项目分类' })
+  @ApiQuery({ name: '_id', description: '修改改项目分类的id' })
   @Put('editeProjectCategory')
   editeProjectCategory(@Request() req: any, @Body() body: ProjectCategory) {
     return this.ProJectMService.editeProjectCategory(req, body)
@@ -60,8 +96,8 @@ export class ProJectMController {
   }
 
   // 编辑项目基础信息
-  @ApiOperation({ summary: '修改项目基础信息' })
-  @ApiQuery({ name: '_id', description: '修改项目基础信息的id' })
+  @ApiOperation({ summary: '修改改项目基础信息' })
+  @ApiQuery({ name: '_id', description: '修改改项目基础信息的id' })
   @Put('editeProject')
   editeProject(@Request() req: any, @Body() body: Project) {
     return this.ProJectMService.editeProject(req, body)
@@ -94,8 +130,8 @@ export class ProJectMController {
   }
 
   // 编辑标注
-  @ApiOperation({ summary: '修改标注' })
-  @ApiQuery({ name: '_id', description: '修改标注的id' })
+  @ApiOperation({ summary: '修改改标注' })
+  @ApiQuery({ name: '_id', description: '修改改标注的id' })
   @Put('editRole')
   editRole(@Request() req: any, @Body() body: PmLable) {
     return this.ProJectMService.editePmLable(req, body)

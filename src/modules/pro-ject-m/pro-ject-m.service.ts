@@ -4,7 +4,9 @@ import { InjectModel } from 'nestjs-typegoose';
 import { Project } from 'src/model/ProjectDetails/Project.model';
 import { ProjectCategory } from 'src/model/ProjectDetails/ProjectCategory.model';
 import { ProjectComment } from 'src/model/ProjectDetails/ProjectComment.model';
+import { ProjectMieage } from 'src/model/ProjectDetails/ProjectMileage.model';
 import { PmLable } from 'src/model/ProjectM/lable.model';
+import { TaskCategroy } from 'src/model/TaskModel/TaskCategroy.model';
 import { User } from 'src/model/User/user.model';
 import { Pagination, QueryPage, QueryStructure } from 'src/utils/pageations';
 
@@ -31,7 +33,47 @@ export class ProJectMService {
     @InjectModel(Project) private readonly ProjectModel: ModelType<Project>,
     @InjectModel(User) private readonly UserModel: ModelType<User>,
     @InjectModel(ProjectCategory) private readonly ProjectCategoryModel: ModelType<ProjectCategory>,
+    @InjectModel(ProjectMieage) private readonly ProjectMieageModel: ModelType<ProjectMieage>,
+    // 测试用，删除即删
+    @InjectModel(TaskCategroy) private readonly TaskCategroyModel: ModelType<TaskCategroy>,
+
   ) { }
+
+
+
+  // -----------------------------项目里程碑逻辑-----------------
+  // 获取里程碑
+  async getProjectMieage(req: any) {
+    let { current, pageSize, } = QueryPage(req)
+    // 查询
+    let res = await Pagination(this.ProjectMieageModel).page(current).size(pageSize).display(5).find({}).exec()
+    return this.ParsingPage(res, () => res.records)
+  }
+
+  // 创建项目里程碑
+  async createProjectMieage(body: ProjectMieage) {
+    return await this.ProjectMieageModel.create(body)
+  }
+
+  // 编辑项目里程碑
+  async editeProjectMieage(req: any, body: ProjectMieage) {
+    let { _id } = QueryStructure(req)
+    return await this.ProjectMieageModel.findByIdAndUpdate(_id, body)
+  }
+
+  // 删除项目里程碑 可以批量删除 ,注意，删除里程碑 会删除连带的任务( 未做 )
+  async deleteProjectMieage(req: any) {
+    let { idList } = QueryStructure(req)
+
+    let List = idList.split(',')
+    await List.forEach(async (v) => {
+      return await this.ProjectMieageModel.findByIdAndDelete(v)
+    })
+    return {
+      sucess: true,
+      message: '删除成功！'
+    }
+  }
 
   // -----------------------------项目分类逻辑-----------------
   // 查询项目分类信息 默认分页。支持多字段查询
