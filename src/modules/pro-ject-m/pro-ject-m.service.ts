@@ -5,6 +5,7 @@ import { Project } from 'src/model/ProjectDetails/Project.model';
 import { ProjectCategory } from 'src/model/ProjectDetails/ProjectCategory.model';
 import { ProjectComment } from 'src/model/ProjectDetails/ProjectComment.model';
 import { ProjectMieage } from 'src/model/ProjectDetails/ProjectMileage.model';
+import { ProjectRoles } from 'src/model/ProjectDetails/ProjectRoles.model';
 import { PmLable } from 'src/model/ProjectM/lable.model';
 import { TaskCategroy } from 'src/model/TaskModel/TaskCategroy.model';
 import { User } from 'src/model/User/user.model';
@@ -28,18 +29,52 @@ export class ProJectMService {
 
   // 构造器
   constructor(
+    // 测试用，删除即删
+    @InjectModel(TaskCategroy) private readonly TaskCategroyModel: ModelType<TaskCategroy>,
+
     @InjectModel(PmLable) private readonly PmLableModel: ModelType<PmLable>,
     @InjectModel(ProjectComment) private readonly ProjectCommentModel: ModelType<ProjectComment>,
     @InjectModel(Project) private readonly ProjectModel: ModelType<Project>,
     @InjectModel(User) private readonly UserModel: ModelType<User>,
     @InjectModel(ProjectCategory) private readonly ProjectCategoryModel: ModelType<ProjectCategory>,
     @InjectModel(ProjectMieage) private readonly ProjectMieageModel: ModelType<ProjectMieage>,
-    // 测试用，删除即删
-    @InjectModel(TaskCategroy) private readonly TaskCategroyModel: ModelType<TaskCategroy>,
+    @InjectModel(ProjectRoles) private readonly ProjectRolesModel: ModelType<ProjectRoles>,
 
   ) { }
 
 
+  // -----------------------------项目内角色-----------------
+  // 获取项目内角色
+  async getProjectRoles(req: any) {
+    let { current, pageSize, } = QueryPage(req)
+    // 查询
+    let res = await Pagination(this.ProjectRolesModel).page(current).size(pageSize).display(5).find({}).exec()
+    return this.ParsingPage(res, () => res.records)
+  }
+
+  // 创建项目项目内角色
+  async createProjectRoles(body: ProjectRoles) {
+    return await this.ProjectRolesModel.create(body)
+  }
+
+  // 编辑项目项目内角色
+  async editeProjectRoles(req: any, body: ProjectRoles) {
+    let { _id } = QueryStructure(req)
+    return await this.ProjectRolesModel.findByIdAndUpdate(_id, body)
+  }
+
+  // 删除项目项目内角色 可以批量删除 ,注意，删除项目内角色 会删除连带的任务( 未做 )
+  async deleteProjectRoles(req: any) {
+    let { idList } = QueryStructure(req)
+    let List = idList.split(',')
+    await List.forEach(async (v) => {
+      return await this.ProjectRolesModel.findByIdAndDelete(v)
+    })
+    return {
+      sucess: true,
+      message: '删除成功！'
+    }
+  }
 
   // -----------------------------项目里程碑逻辑-----------------
   // 获取里程碑
