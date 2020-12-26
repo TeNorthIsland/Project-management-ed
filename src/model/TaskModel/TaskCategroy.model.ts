@@ -2,67 +2,25 @@ import { ApiPropertyOptional } from "@nestjs/swagger"
 import { prop, Ref } from "@typegoose/typegoose"
 import { IsNotEmpty } from "class-validator"
 
-class ChilderClass {
-
-
-  @ApiPropertyOptional({ description: '分类名称', example: 'SASDA98766' })
-  @IsNotEmpty({ message: '分类名称' })
-  @prop({})
-  doc: string
-
-
-  @ApiPropertyOptional({ description: '父类id', example: 'SASDA98766' })
-  @IsNotEmpty({ message: '父类id' })
-  @prop({})
-  pId: string
-
-
-  @ApiPropertyOptional({ description: '分类唯一标识', example: 'SASDA98766' })
-  @IsNotEmpty({ message: '分类唯一标识' })
-  @prop({})
-  id: 1201
-}
 
 export class TaskCategroy {
 
-  @ApiPropertyOptional({ description: '分类名称', example: '需求类型' })
-  @IsNotEmpty({ message: '分类名称' })
+  @ApiPropertyOptional({ description: '节点名称', example: '需求类型' })
+  @IsNotEmpty({ message: '子节点名称不能为空' })
   @prop({})
   title: string
 
-  @ApiPropertyOptional({
-    description: '子类', example: [
-      {
-        "doc": "需求设计",
-        "pId": 1,
-        "id": "10",
-      },
-      {
-        "doc": "产品设计评审",
-        "pId": 0,
-        "id": "12",
-      },
-      {
-        "doc": "产品设计",
-        "pId": 0,
-        "id": "15",
-      },
-      {
-        "doc": "需求调研",
-        "pId": 1,
-        "id": "2",
-      },
-      {
-        "doc": "需求评审",
-        "pId": 1,
-        "id": "6",
-      }
-    ]
-  })
-  @IsNotEmpty({ message: '子类' })
-  @prop({ type: () => ChilderClass })
-  children: ChilderClass[]
+  @ApiPropertyOptional({ description: '父节点id', example: '' })
+  @prop({})
+  pid: string
 
+  @ApiPropertyOptional({ description: '节点描述', example: '需求类型' })
+  @prop({})
+  description: string
+
+  // @ApiPropertyOptional({ description: '子节点', example: [''] })
+  // @prop({ ref: () => TaskCategroy })
+  // children: Ref<TaskCategroy>[]
 }
 
 

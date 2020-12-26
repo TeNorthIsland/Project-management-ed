@@ -1,11 +1,10 @@
 import { Body, Controller, Delete, Get, Post, Put, Request, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import { ApiHeader, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { GlobalRole } from 'src/model/GlobalRole/globalRole.model';
+import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Project } from 'src/model/ProjectDetails/Project.model';
 import { ProjectCategory } from 'src/model/ProjectDetails/ProjectCategory.model';
 import { ProjectComment } from 'src/model/ProjectDetails/ProjectComment.model';
 import { ProjectMieage } from 'src/model/ProjectDetails/ProjectMileage.model';
+import { ProjectRoles } from 'src/model/ProjectDetails/ProjectRoles.model';
 import { PmLable } from 'src/model/ProjectM/lable.model';
 import { ProJectMService } from './pro-ject-m.service';
 
@@ -16,6 +15,40 @@ export class ProJectMController {
   constructor(
     private readonly ProJectMService: ProJectMService
   ) { }
+
+  // ------------------项目内角色----------------
+  // 创项目内角色 
+  @ApiOperation({ summary: '创项目内角色' })
+  @Post('createProjectMieage')
+  createProjectRoles(@Body() body: ProjectRoles): any {
+    return this.ProJectMService.createProjectRoles(body)
+  }
+
+  // 编项目内角色
+  @ApiOperation({ summary: '修改项目内角色' })
+  @ApiQuery({ name: '_id', description: '修改项目内角色的id' })
+  @Put('editeProjectRoles')
+  editeProjectRoles(@Request() req: any, @Body() body: ProjectRoles) {
+    return this.ProJectMService.editeProjectRoles(req, body)
+  }
+
+  // 查项目内角色
+  @ApiOperation({ summary: '查项目内角色列表' })
+  @ApiQuery({ name: 'current', required: false })
+  @ApiQuery({ name: 'pageSize', required: false })
+  @Get('getProjectRolesList')
+  getProjectRoles(@Request() req: any) {
+    return this.ProJectMService.getProjectRoles(req)
+  }
+
+  // 删项目内角色,允许批量操作
+  @ApiOperation({ summary: '删除指定ID项目内角色' })
+  @ApiQuery({ name: 'idList', required: false })
+  @Delete('deleteProjectRoles')
+  deleteProjectRoles(@Request() req: any) {
+    return this.ProJectMService.deleteProjectRoles(req)
+  }
+
 
 
   // ------------------项目里程碑----------------

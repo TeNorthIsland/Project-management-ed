@@ -15,6 +15,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { ProJectMModule } from './modules/pro-ject-m/pro-ject-m.module';
 import { LogModule } from './modules/log/log.module';
+import { TaskMModule } from './modules/task-m/task-m.module';
 import configDatabase from './config/database'
 
 
@@ -42,7 +43,8 @@ import configDatabase from './config/database'
     AlbumModule,
     GroleModule,
     ProJectMModule,
-    LogModule
+    LogModule,
+    TaskMModule
 
 
   ],

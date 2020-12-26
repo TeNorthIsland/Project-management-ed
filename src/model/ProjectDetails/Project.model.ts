@@ -11,7 +11,6 @@ export class Project {
   @prop({})
   name: string
 
-
   @ApiPropertyOptional({ description: '项目编号', example: 'SASDA98766' })
   @IsNotEmpty({ message: '项目编号' })
   @prop({})

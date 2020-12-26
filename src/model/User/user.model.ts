@@ -1,11 +1,3 @@
-/*
- * @Author: your name
- * @Date: 2020-07-24 19:47:23
- * @LastEditTime: 2020-12-17 13:21:16
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \Node_NestJS\Noted\第五章，这商业项目\蓝图\MnogDB_blueprint\src\model\User\user.model.ts
- */
 import { prop, Ref } from '@typegoose/typegoose'
 import * as bcrypt from 'bcrypt'
 import { ApiPropertyOptional, ApiRequestTimeoutResponse } from '@nestjs/swagger'
