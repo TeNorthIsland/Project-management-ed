@@ -40,6 +40,15 @@ export class LogingController {
     return this.LoginService.register(req, body)
   }
 
+  // 查询所有用户
+  @ApiOperation({ summary: '查询所有用户列表' })
+  @ApiQuery({ name: 'current', required: false })
+  @ApiQuery({ name: 'pageSize', required: false })
+  @Get('getUseList')
+  getUseList(@Request() req: any) {
+    return this.LoginService.getUseList(req)
+  }
+
   // @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))  //这里就能直接做数据验证了,这东西就类似于路由守卫
   @Get('me')

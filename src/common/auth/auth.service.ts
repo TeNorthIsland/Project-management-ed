@@ -47,6 +47,7 @@ export class AuthService {
         path: 'rule'
       })
       .exec()
+      
     console.log('payload', payload);
 
     if (!payload) {

@@ -1,11 +1,3 @@
-/*
- * @Author: your name
- * @Date: 2020-07-24 13:12:12
- * @LastEditTime: 2020-12-16 21:23:00
- * @LastEditors: your name
- * @Description: In User Settings Edit
- * @FilePath: \Node_NestJS\Noted\第五章，这商业项目\蓝图\MnogDB_blueprint\src\app.module.ts
- */
 import { Module } from '@nestjs/common';
 import { AppService } from './app.service';
 // 配置项分离模块
@@ -19,8 +11,21 @@ import { AuthModule } from './common/auth/auth.module';
 import { LogingModule } from './modules/loging/loging.module';
 import { AlbumModule } from './common/album/album.module';
 import { GroleModule } from './modules/grole/grole.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+import { ProJectMModule } from './modules/pro-ject-m/pro-ject-m.module';
+import { LogModule } from './modules/log/log.module';
+import { TaskMModule } from './modules/task-m/task-m.module';
+import configDatabase from './config/database'
+
+
 @Module({
   imports: [
+    // 部署客户端 程序
+    // 客户端
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client'),
+    }),
     // 配置项集中管理
     ConfigModule.load(path.resolve(__dirname, 'config', '**/!(*.d).{ts,js}')),
     // 进行邮件验证项
@@ -29,15 +34,17 @@ import { GroleModule } from './modules/grole/grole.module';
       inject: [ConfigService], // 外部的持续注入，注入到具体的模块中去
     }),
     // 配置数据库服务项
-    TypegooseModule.forRoot("mongodb://localhost:27017/SafetySystm-api", {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
+    TypegooseModule.forRoot(configDatabase.uri, {
+      ...configDatabase.other
     }),
     EmailModule,
     AuthModule,
     LogingModule,
     AlbumModule,
-    GroleModule
+    GroleModule,
+    ProJectMModule,
+    LogModule,
+    TaskMModule
 
 
   ],
