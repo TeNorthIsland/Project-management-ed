@@ -21,7 +21,7 @@ export class AuthController {
     return this.authService.updataUser(req, Body)
   }
 
-  // 获取数据
+  // 获取数据 
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: '获取当前登录的用户数据' })
   @ApiHeader({ name: 'token' })
