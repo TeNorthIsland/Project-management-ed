@@ -7,7 +7,7 @@ import { UserDto } from 'src/Dto/login/user.dto';
 
 
 @ApiTags('登录获取token')
-@Controller()
+@Controller('/api')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,  //注入验证器

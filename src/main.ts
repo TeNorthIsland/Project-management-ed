@@ -29,7 +29,6 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe())  // 开启全局的验证管道和错误过滤   
   app.useGlobalFilters(new HttpExceptionFilter());
-  app.setGlobalPrefix('/api')  // 全局的补全前缀  正式发布的时候请使用它
   await app.listen(3045);
 }
 bootstrap();

@@ -7,7 +7,7 @@ import { LogService } from './log.service';
 @ApiHeader({ name: 'token' })  //如果直接丢这里就是全局的加
 @ApiTags('项目日志')
 @UseGuards(AuthGuard('jwt'))
-@Controller('/log')
+@Controller('/api/log')
 export class LogController {
   constructor(
     private readonly LogService: LogService

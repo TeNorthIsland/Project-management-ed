@@ -11,7 +11,7 @@ import { ProJectMService } from './pro-ject-m.service';
 
 @ApiTags('项目管理模块')
 @UseGuards(AuthGuard('jwt'))
-@Controller('/proJectM')
+@Controller('/api/proJectM')
 export class ProJectMController {
   constructor(
     private readonly ProJectMService: ProJectMService

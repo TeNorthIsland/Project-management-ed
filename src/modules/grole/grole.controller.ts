@@ -7,7 +7,7 @@ import { GroleService } from './grole.service'
 @ApiHeader({ name: 'token' })  //如果直接丢这里就是全局的加
 @ApiTags('全局角色控制模块')
 @UseGuards(AuthGuard('jwt'))
-@Controller('/grole')
+@Controller('/api/grole')
 export class GroleController {
   constructor(
     private readonly GroleService: GroleService
