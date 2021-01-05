@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Post, Put, Request, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Project } from 'src/model/ProjectDetails/Project.model';
 import { ProjectCategory } from 'src/model/ProjectDetails/ProjectCategory.model';
@@ -9,8 +10,8 @@ import { PmLable } from 'src/model/ProjectM/lable.model';
 import { ProJectMService } from './pro-ject-m.service';
 
 @ApiTags('项目管理模块')
-// @UseGuards(AuthGuard('jwt'))
-@Controller('/proJectM')
+@UseGuards(AuthGuard('jwt'))
+@Controller('/api/proJectM')
 export class ProJectMController {
   constructor(
     private readonly ProJectMService: ProJectMService

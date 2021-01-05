@@ -4,6 +4,7 @@ import { InjectModel } from 'nestjs-typegoose';
 import { pid } from 'process';
 import { Task } from 'src/model/TaskModel/Task.model';
 import { TaskCategroy } from 'src/model/TaskModel/TaskCategroy.model';
+import { TaskComment } from 'src/model/TaskModel/TaskComment.model';
 import { Pagination, QueryPage, QueryStructure } from 'src/utils/pageations';
 
 @Injectable()
@@ -27,8 +28,42 @@ export class TaskMService {
   constructor(
     @InjectModel(TaskCategroy) private readonly TaskCategroyModel: ModelType<TaskCategroy>,
     @InjectModel(Task) private readonly TaskModel: ModelType<Task>,
+    @InjectModel(TaskComment) private readonly TaskCommentModal: ModelType<TaskComment>,
   ) { }
 
+
+  // -----------------------------任务评论---------------
+  // 任务评论信息
+  async getTaskComment(req: any) {
+    let { current, pageSize, } = QueryPage(req)
+    // 查询
+    let res = await Pagination(this.TaskCommentModal).page(current).size(pageSize).display(5).find({}).exec()
+    return this.ParsingPage(res, () => res.records)
+  }
+
+  // 创建任务评论信息
+  async createTaskComment(body: TaskComment) {
+    return await this.TaskCommentModal.create(body)
+  }
+
+  // 编辑任务评论信息
+  async editeTaskComment(req: any, body: TaskComment) {
+    let { _id } = QueryStructure(req)
+    return await this.TaskCommentModal.findByIdAndUpdate(_id, body)
+  }
+
+  // 删除任务评论信息 可以批量删除 ,注意，任务评论信息 会删除连带的任务评论未做 )
+  async deleteTaskComment(req: any) {
+    let { idList } = QueryStructure(req)
+    let List = idList.split(',')
+    await List.forEach(async (v) => {
+      return await this.TaskCommentModal.findByIdAndDelete(v)
+    })
+    return {
+      sucess: true,
+      message: '删除成功！'
+    }
+  }
 
   // -----------------------------任务分类-----------------
   // 获取任务分类

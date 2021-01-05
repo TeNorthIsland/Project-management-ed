@@ -1,11 +1,3 @@
-/*
- * @Author: lishizeng
- * @Date: 2020-07-24 13:12:12
- * @LastEditTime: 2020-12-16 21:48:24
- * @LastEditors: lishizeng
- * @Description: In User Settings Edit
- * @FilePath: \Node_NestJS\Noted\第五章，这商业项目\蓝图\MnogDB_blueprint\src\main.ts
- */
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger"
@@ -18,7 +10,7 @@ import { join } from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-    
+
   app.enableCors();  //解决跨域
   // 静态资源访问
   app.useStaticAssets(join(__dirname, './', 'uploads'))
@@ -37,7 +29,6 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe())  // 开启全局的验证管道和错误过滤   
   app.useGlobalFilters(new HttpExceptionFilter());
-
   await app.listen(3045);
 }
 bootstrap();

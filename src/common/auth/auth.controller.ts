@@ -7,7 +7,7 @@ import { UserDto } from 'src/Dto/login/user.dto';
 
 
 @ApiTags('登录获取token')
-@Controller()
+@Controller('/api')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,  //注入验证器
@@ -21,7 +21,7 @@ export class AuthController {
     return this.authService.updataUser(req, Body)
   }
 
-  // 获取数据
+  // 获取数据 
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: '获取当前登录的用户数据' })
   @ApiHeader({ name: 'token' })
