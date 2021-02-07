@@ -10,6 +10,7 @@ import { JwtStrategy } from './jwt.strategy';
 
 @Injectable()
 export class AuthService {
+
   constructor(
     @InjectModel(User) private readonly UserMolde: ModelType<User>,
     private readonly jwtService: JwtService,
@@ -33,6 +34,20 @@ export class AuthService {
     return this.UserMolde.findByIdAndUpdate(id, body)
   }
 
+  // 删除标注 可以批量删除
+  async deletePmLable(req: any) {
+    let { idList } = QueryStructure(req)
+
+    let List = idList.split(',')
+    List.forEach(async (v) => {
+      return await this.UserMolde.findByIdAndDelete(v)
+    })
+    return {
+      sucess: true,
+      message: '删除成功！'
+    }
+  }
+
   // 根据token结构出对应的数据结构
   async getUserInfoFormToken(token: string) {
 
@@ -47,7 +62,7 @@ export class AuthService {
         path: 'rule'
       })
       .exec()
-      
+
     console.log('payload', payload);
 
     if (!payload) {

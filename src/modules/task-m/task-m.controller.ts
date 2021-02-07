@@ -8,7 +8,7 @@ import { TaskMService } from './task-m.service'
 
 @ApiTags('任务管理模块')
 @UseGuards(AuthGuard('jwt'))
-@Controller('/task-m')
+@Controller('/api/task-m')
 export class TaskMController {
   constructor(
     private readonly TaskMService: TaskMService

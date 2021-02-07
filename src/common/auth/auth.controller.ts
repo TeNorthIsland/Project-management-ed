@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Request, UseGuards, Body, Query } from '@nestjs/common';
+import { Controller, Get, Post, Request, UseGuards, Body, Query, Delete } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { ApiTags, ApiOperation, ApiHeaders, ApiPropertyOptional, ApiQuery, ApiHeader } from '@nestjs/swagger';
@@ -7,7 +7,7 @@ import { UserDto } from 'src/Dto/login/user.dto';
 
 
 @ApiTags('登录获取token')
-@Controller()
+@Controller('/api')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,  //注入验证器
@@ -21,7 +21,14 @@ export class AuthController {
     return this.authService.updataUser(req, Body)
   }
 
-  // 获取数据
+  @ApiOperation({ summary: '删除用户' })
+  @ApiQuery({ name: 'idList', required: false })
+  @Delete('deleteUserModal')
+  async deleteUserModal(@Request() req: any): Promise<any> {
+    return this.authService.deletePmLable(req)
+  }
+
+  // 获取数据 
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: '获取当前登录的用户数据' })
   @ApiHeader({ name: 'token' })

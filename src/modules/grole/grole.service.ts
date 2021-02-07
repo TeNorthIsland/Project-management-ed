@@ -48,7 +48,10 @@ export class GroleService {
     List.forEach(async (v) => {
       return await this.GlobalRoleModel.findByIdAndDelete(v)
     })
+  }
 
-
+  // 查询角色列表前悬需要，选择器形式
+  async querySysRoleList() {
+    return await this.GlobalRoleModel.find()
   }
 }

@@ -8,7 +8,7 @@ import { AuthGuard } from '@nestjs/passport';
 
 @ApiHeader({ name: 'token' })  //如果直接丢这里就是全局的加
 @ApiTags('注册模块验证模块')
-@Controller('/loging')
+@Controller('/api/loging')
 export class LogingController {
   constructor(
     private readonly LoginService: LogingService,

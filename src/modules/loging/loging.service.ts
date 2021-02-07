@@ -65,7 +65,7 @@ export class LogingService {
     if (!(user.length)) {
       return {
         success: true,
-        message: '您还未注册，请先注册'
+        message: '对不起您的验证码有误，'
       }
     }
 
