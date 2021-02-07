@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[16],{iG81:function(r,e,t){"use strict";t.r(e);var n=t("q1tI"),a=t.n(n),o=function(){return a.a.createElement(a.a.Fragment,null,a.a.createElement("h1",null,"BMlaoli-coding...."))};e.default=o}}]);

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Request, UseGuards, Body, Query } from '@nestjs/common';
+import { Controller, Get, Post, Request, UseGuards, Body, Query, Delete } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { ApiTags, ApiOperation, ApiHeaders, ApiPropertyOptional, ApiQuery, ApiHeader } from '@nestjs/swagger';
@@ -19,6 +19,13 @@ export class AuthController {
   @Post('edit')
   async edit(@Request() req: any, @Body() Body: User): Promise<any> {
     return this.authService.updataUser(req, Body)
+  }
+
+  @ApiOperation({ summary: '删除用户' })
+  @ApiQuery({ name: 'idList', required: false })
+  @Delete('deleteUserModal')
+  async deleteUserModal(@Request() req: any): Promise<any> {
+    return this.authService.deletePmLable(req)
   }
 
   // 获取数据 

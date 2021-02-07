@@ -10,7 +10,7 @@ import { PmLable } from 'src/model/ProjectM/lable.model';
 import { ProJectMService } from './pro-ject-m.service';
 
 @ApiTags('项目管理模块')
-@UseGuards(AuthGuard('jwt'))
+// @UseGuards(AuthGuard('jwt'))
 @Controller('/api/proJectM')
 export class ProJectMController {
   constructor(

@@ -2,7 +2,7 @@
 /dist
 /node_modules
 /src/config/database.ts
-/client 
+/client
 
 # Logs
 logs

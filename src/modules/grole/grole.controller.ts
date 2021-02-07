@@ -4,9 +4,9 @@ import { ApiHeader, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { GlobalRole } from 'src/model/GlobalRole/globalRole.model';
 import { GroleService } from './grole.service'
 
-@ApiHeader({ name: 'token' })  //如果直接丢这里就是全局的加
+// @ApiHeader({ name: 'token' })  //如果直接丢这里就是全局的加
 @ApiTags('全局角色控制模块')
-@UseGuards(AuthGuard('jwt'))
+// @UseGuards(AuthGuard('jwt'))
 @Controller('/api/grole')
 export class GroleController {
   constructor(
@@ -46,4 +46,10 @@ export class GroleController {
     return this.GroleService.deleteRole(req)
   }
 
+  // 角色选择器
+  @ApiOperation({ summary: '角色选择器列表' })
+  @Get('querySysRoleList')
+  querySysRoleList() {
+    return this.GroleService.querySysRoleList()
+  }
 }
